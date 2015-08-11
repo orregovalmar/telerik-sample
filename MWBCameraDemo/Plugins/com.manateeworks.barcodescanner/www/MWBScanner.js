@@ -1,4 +1,19 @@
 /*
+    Version 1.6 
+
+    - Added continuous scanning functionality:
+
+    - Added support for 64bit android devices.
+    - Camera overlay bug fixes.
+    Decoder updates:
+        - DM non-centric scanning upgrade (still with fixed number of testing locations)
+        - GS1 updates: 
+        - Code 128 FNC1 not included in result, only GS1 compliance is set
+        - DM - proper handling of FNC1 and ECI support added
+        - Fixed non-symetric viewfinder (for all orientations) in ios/android native and phonegap
+        - Fixed PDF trialing characters on all platforms for specific samples
+
+
     Version 1.5
 
     - Added multi-threading support. By default decoder will use all available CPU cores on device. To limit the number 
@@ -465,7 +480,32 @@
      */
  MWBsetCustomParam: function(key, value) {
     cordova.exec(function(){}, function(){}, "MWBarcodeScanner", "setCustomParam", [key, value]);
- }
+               },
+               
+               
+    /**
+    * Enable/disable continuous scanning. If 'shouldClose' is 'false', result callback will be performed and
+    * scanner will be paused. The User can call 'resumeScanning' to continue scanning, or 'closeScanner'
+    * for closing the scanner. Default is 'true'.
+    * Function is not available on WP8 due to the technical limitations.
+    */
+    MWBcloseScannerOnDecode: function(shouldClose) {
+    cordova.exec(function(){}, function(){}, "MWBarcodeScanner", "closeScannerOnDecode", [shouldClose]);
+    },
+    /**
+    * Resume scanning. Use this method if already using MWBcloseScannerOnDecode(false).
+    * Function is not available on WP8 due to the technical limitations.
+    */
+    MWBresumeScanning: function() {
+    cordova.exec(function(){}, function(){}, "MWBarcodeScanner", "resumeScanning", []);
+    },
+    /**
+    * Close scanner. Use this method if already using MWBcloseScannerOnDecode(false).
+    * Function is not available on WP8 due to the technical limitations.
+    */
+    MWBcloseScanner: function() {
+    cordova.exec(function(){}, function(){}, "MWBarcodeScanner", "closeScanner", []);
+    }
  
  };
  
@@ -566,8 +606,13 @@
                   //  mwbs['MWBenableZoom'](true);
                   //  mwbs['MWBsetZoomLevels'](200, 400, 0);
                   //  mwbs['MWBsetMinLength'](constants.MWB_CODE_MASK_39, 4);
-                  // mwbs['MWBsetMaxThreads'](1);
-                    // console.log('JS Settings ends: '+ (new Date()).getTime());                    
+                  //  mwbs['MWBsetMaxThreads'](1);
+                  //  mwbs['MWBcloseScannerOnDecode'](false);
+                        
+                                  
+                                  
+
+                    // console.log('JS Settings ends: '+ (new Date()).getTime());
             //    }
             //    catch(e){
             //        console.log(e);
@@ -595,7 +640,14 @@
             //Perform some action on scanning canceled if needed
             } 
             else if (result && result.code){
-                navigator.notification.alert(result.code, function(){}, result.type + (result.isGS1?" (GS1)":""), 'Close');
+               
+
+                // setTimeout(function(){                  //
+                //    BarcodeScanner.MWBresumeScanning();  // Use this sample when using mwbs['MWBcloseScannerOnDecode'](false);
+                // },2000);                                //
+
+               navigator.notification.alert(result.code, function(){}, result.type + (result.isGS1?" (GS1)":""), 'Close');
+
             }
         }
 

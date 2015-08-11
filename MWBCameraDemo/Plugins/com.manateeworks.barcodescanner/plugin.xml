@@ -2,21 +2,21 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.manateeworks.barcodescanner"
-    version="1.5.0">
+    version="1.6.1">
     <name>MWBarcodeScanner</name>
-    <description>Manateeworks Barcode Scanner Plugin</description>
+    <description>Manatee Works Barcode Scanner Plugin</description>
     <license>MIT</license>
     <keywords>phonegap,barcode</keywords>
     
-    
+
     <js-module src="www/MWBScanner.js" name="Scanner">
         <clobbers target="scanner" />
     </js-module>
     <asset src="www/MWBScanner.js" target="js/MWBScanner.js" />
     
     
-    <dependency id="org.apache.cordova.dialogs" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-dialogs.git" />
-    <dependency id="org.apache.cordova.device" url="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" />
+    <dependency id="org.apache.cordova.dialogs" />
+    <dependency id="org.apache.cordova.device" />
     
     <!-- android -->
      <platform name="android">
@@ -63,7 +63,10 @@
      <source-file src="src/android/libs/armeabi/libBarcodeScannerLib.so" target-dir="libs/armeabi" />
      <source-file src="src/android/libs/x86/libBarcodeScannerLib.so" target-dir="libs/x86" />
      <source-file src="src/android/libs/armeabi-v7a/libBarcodeScannerLib.so" target-dir="libs/armeabi-v7a" />
-     
+     <source-file src="src/android/libs/arm64-v8a/libBarcodeScannerLib.so" target-dir="libs/arm64-v8a" />
+      <source-file src="src/android/libs/mips/libBarcodeScannerLib.so" target-dir="libs/mips" />
+
+
      </platform>
     
    <!-- ios -->
