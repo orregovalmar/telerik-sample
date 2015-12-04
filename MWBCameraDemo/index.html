@@ -8,16 +8,19 @@
 	<link href="styles/main.css" rel="stylesheet">
 
 	<script src="cordova.js"></script>
-	<script src="kendo/js/jquery.min.js"></script>
+    	<script src="kendo/js/jquery.min.js"></script>
 	<script src="kendo/js/kendo.mobile.min.js"></script>
 	<script src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/MWBConfig.js"></script>
+
 </head>
 <body>
 	<div data-role="view">
 
-     <form style="width: 100%; text-align: center;">
-        <input type="button" value="Scan Barcode" onclick="scanner.startScanning()" style="font-size: 40px; width: 300px; height: 50px; margin-top: 100px;"/>
-    </form>
+        <form style="width: 100%; text-align: center;">
+    			<input type="button" value="Scan Barcode" onclick="scanner.startScanning(MWBSInitSpace.init,MWBSInitSpace.callback)" 
+  				  style="font-size: 40px; width: 300px; height: 50px; margin-top: 100px;"/> 
+  	    </form>
 	</div>
 </body>
 </html>

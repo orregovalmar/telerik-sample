@@ -1,20 +1,19 @@
 var MWBSInitSpace = MWBSInitSpace || {};
-/* Registration and settings are defined here, users will supply their own username and key depending on which platform they will use
-    @params 
+/* Registration and settings are defined here, users will supply their own 
+username and key depending on which platform they will use
+    @params
         mwbs - is the MWBScanner object, passed from the plugin function
         constants - the constants used for scanner settings
         dvc - the device on which it runs
- 
- 
  */
 MWBSInitSpace.init = function(mwbs,constants,dvc){
     console.log('MWBSInitSpace.init Invoked at: '+ (new Date()).getTime());
     //change these registration settings to match your licence keys
     /* BEGIN Registration settings */
-
+  
     //if your app doesn't work after setting license keys, try to uncomment the try-catch, and see what the error is
-    
-//    try{
+      
+    try{
         var mwregister = {
            'Android' : {
                'MWB_CODE_MASK_25' : {'username' : '', 'key' : ''},
@@ -59,21 +58,23 @@ MWBSInitSpace.init = function(mwbs,constants,dvc){
                'MWB_CODE_MASK_DOTCODE' : {'username':'','key':''}
            }
         }
-//    }
-//    catch(e){
-//        console.log(e);
-//    }
+    }
+	catch(e){
+		console.log(e);
+	}
     /* END registration settings */
-    var platform = mwregister[dvc.platform];
+    
+	var platform = mwregister[dvc.platform];
     Object.keys(platform).forEach(function(reg_codes){
         mwbs['MWBregisterCode'](constants[reg_codes],platform[reg_codes]['username'],platform[reg_codes]['key']);
     });
-
+  
     //settings portion, disable those that are not needed
-
+  
     /* BEGIN settings CALLS */
-        //if your code doesn't work after changing a few parameters, and there is no error output, uncomment the try-catch, the error will be output in your console
-//    try{
+    //if your code doesn't work after changing a few parameters, and there is no error output, 
+	//uncomment the try-catch, the error will be output in your console
+	try{
         /*UNCOMMENT the lines you wish to include in the settings */
         //mwbs['MWBsetInterfaceOrientation'] (constants.OrientationPortrait);
         //mwbs['MWBsetOverlayMode'](constants.OverlayModeImage);
@@ -87,31 +88,32 @@ MWBSInitSpace.init = function(mwbs,constants,dvc){
         //mwbs['MWBenableZoom'](true);
         //mwbs['MWBsetZoomLevels'](200, 400, 0);
         //mwbs['MWBsetCustomParam']('CUSTOM_PARAM','CUSTOM_VALUE');
-        //mwbs['MWBsetActiveSubcodes'](constants.MWB_CODE_MASK_25 | constants.MWB_SUBC_MASK_C25_INTERLEAVED);        
-//    }
-//    catch(e){
-//        console.log(e);
-//    }
-
+        //mwbs['MWBsetActiveSubcodes'](constants.MWB_CODE_MASK_25 | constants.MWB_SUBC_MASK_C25_INTERLEAVED);      
+	}
+	catch(e){
+		console.log(e);
+	}
+  
     /* END settings CALLS */
-    
+      
     /* CUSTOM JAVASCRIPT CALLS */
-
+  
 };
 //custom callback function, one that can be modified by the user
 MWBSInitSpace.callback = function(result){
     console.log('MWBSInitSpace.callback Invoked at: '+ (new Date()).getTime());
-    
+      
      //result.code - string representation of barcode result
      //result.type - type of barcode detected
      //result.bytes - bytes array of raw barcode result
-     
+       
     console.log('Scan complete');
     if (result.type == 'Cancel'){
         //Perform some action on scanning canceled if needed
-    } 
+    }
     else
         if (result && result.code){
             navigator.notification.alert(result.code, function(){}, result.type, 'Close');
         }
 }
+ 
