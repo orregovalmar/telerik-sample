@@ -10,7 +10,7 @@
   "FrameworkVersion": "4.0.0",
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
   "CorePlugins": [
-    "com.manateeworks.barcodescanner@v1.8",
+    "com.manateeworks.barcodescanner@v1.8.1”,
     "cordova-plugin-battery-status",
     "cordova-plugin-camera",
     "cordova-plugin-console",
